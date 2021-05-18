@@ -11,7 +11,7 @@ const Navbar = () => {
           Github Finder
         </NavLink>
       </h1>
-      <ul className={styles.pageLinks}>
+      <ul className={styles.links}>
         <li className={styles.link}>
           <NavLink className={styles.navlink} to='/'>
             Home

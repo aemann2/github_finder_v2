@@ -6,6 +6,7 @@ i {
   overflow: hidden;
   background-color: rgb(223, 51, 21);
   color: rgb(252, 247, 239);
+  padding: 0.8rem 0;
 }
 
 .navHeader,
@@ -19,19 +20,24 @@ i {
   margin-left: 2rem;
 }
 
-.icon {
-  margin-right: 1rem;
-}
-
-.pageLinks {
+.links {
   display: flex;
   list-style: none;
   float: right;
-  margin: 1rem 1rem 0 0;
-  font-size: 1.2rem;
+  margin: 0.5rem 1rem 0 0;
+  font-size: 1.5rem;
 }
 
 .navlink {
   color: white;
   margin-right: 1rem;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+
+  &:hover {
+    text-decoration: none;
+    color: white;
+    border-color: white;
+  }
 }
