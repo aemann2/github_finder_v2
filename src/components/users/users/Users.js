@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import UserItem from '../userItem/UserItem';
+import { UserContext } from '../../../context/UserContext';
 import classes from './css/Users.module.scss';
 import axios from 'axios';
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
+  const { users, setUsers } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -16,23 +17,24 @@ const Users = () => {
     });
 
     setLoading(false);
-  }, []);
+  }, [setUsers]);
 
   return (
-    <div className={classes.users}>
-      {loading
-        ? 'Loading'
-        : users.map(({ id, login, avatar_url, html_url }) => {
-            return (
-              <UserItem
-                key={id}
-                login={login}
-                avatar_url={avatar_url}
-                html_url={html_url}
-              />
-            );
+    <>
+      {loading ? (
+        <img
+          className={classes.loader}
+          src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
+          alt=''
+        />
+      ) : (
+        <div className={classes.users}>
+          {users.map((user) => {
+            return <UserItem key={user.id} user={user} />;
           })}
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 
