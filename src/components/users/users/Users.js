@@ -10,11 +10,14 @@ const Users = () => {
 
   useEffect(() => {
     setLoading(true);
-
-    axios.get('https://api.github.com/users').then((res) => {
-      const users = res.data;
-      setUsers([...users]);
-    });
+    axios
+      .get(
+        `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      )
+      .then((res) => {
+        const users = res.data;
+        setUsers([...users]);
+      });
 
     setLoading(false);
   }, [setUsers]);
@@ -25,7 +28,7 @@ const Users = () => {
         <img
           className={classes.loader}
           src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
-          alt=''
+          alt='Loading...'
         />
       ) : (
         <div className={classes.users}>
