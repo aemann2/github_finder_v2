@@ -8,17 +8,24 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState('');
 
   const fetchData = async () => {
-    setLoading(true);
-    const res = await axios.get(
-      `https://api.github.com/users/${searchInput}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-    setUsers([...res.data]);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `https://api.github.com/users/${searchInput}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      );
+      setUsers([res.data]);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setUsers([]);
+      setLoading(false);
+    }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     fetchData();
+    setSearchInput('');
   };
 
   return (
@@ -28,6 +35,7 @@ const Search = () => {
           className={classes.searchBar}
           type='text'
           onChange={(e) => setSearchInput(e.target.value)}
+          value={searchInput}
           placeholder='Search Users...'
           aria-label='Search'
         />
