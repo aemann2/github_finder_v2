@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import classes from './css/Search.module.scss';
-import axios from 'axios';
+import axiosGet from '../../../utils/axiosGet';
 import { UserContext } from '../../../context/UserContext';
 
 const Search = () => {
@@ -8,12 +8,16 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState('');
 
   const fetchData = async () => {
+    let res;
     try {
       setLoading(true);
-      const res = await axios.get(
-        `https://api.github.com/users/${searchInput}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      );
-      setUsers([res.data]);
+      if (searchInput === '') {
+        res = await axiosGet();
+        setUsers([...res.data]);
+      } else {
+        res = await axiosGet(searchInput);
+        setUsers([res.data]);
+      }
       setLoading(false);
     } catch (error) {
       console.error(error);

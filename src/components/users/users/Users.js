@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserItem from '../userItem/UserItem';
 import { UserContext } from '../../../context/UserContext';
 import classes from './css/Users.module.scss';
-import axios from 'axios';
+import axiosGet from '../../../utils/axiosGet';
 
 const Users = () => {
   const { users, setUsers, loading, setLoading } = useContext(UserContext);
@@ -10,15 +10,13 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await axios.get(
-        `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      );
+      const res = await axiosGet();
       setUsers([...res.data]);
       setLoading(false);
     };
 
     fetchData();
-  }, [setUsers]);
+  }, [setUsers, setLoading]);
 
   return (
     <>
