@@ -5,21 +5,19 @@ import classes from './css/Users.module.scss';
 import axios from 'axios';
 
 const Users = () => {
-  const { users, setUsers } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { users, setUsers, loading, setLoading } = useContext(UserContext);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await axios.get(
         `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      )
-      .then((res) => {
-        const users = res.data;
-        setUsers([...users]);
-      });
+      );
+      setUsers([...res.data]);
+      setLoading(false);
+    };
 
-    setLoading(false);
+    fetchData();
   }, [setUsers]);
 
   return (
