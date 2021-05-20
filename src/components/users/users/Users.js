@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import UserItem from '../userItem/UserItem';
 import { UserContext } from '../../../context/UserContext';
 import classes from './css/Users.module.scss';
+// import axios from 'axios';
 import axiosGet from '../../../utils/axiosGet';
 
 const Users = () => {
@@ -10,7 +11,7 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await axiosGet();
+      const res = await axiosGet('/users');
       setUsers([...res.data]);
       setLoading(false);
     };

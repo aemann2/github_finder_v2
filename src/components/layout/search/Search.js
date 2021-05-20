@@ -7,23 +7,23 @@ const Search = () => {
   const { setUsers, setLoading } = useContext(UserContext);
   const [searchInput, setSearchInput] = useState('');
 
+  const endpoint = `/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+
   const fetchData = async () => {
-    let res;
     try {
       setLoading(true);
       if (searchInput === '') {
-        res = await axiosGet();
+        const res = await axiosGet('/users');
         setUsers([...res.data]);
       } else {
-        res = await axiosGet(searchInput);
-        setUsers([res.data]);
+        const res = await axiosGet(endpoint);
+        setUsers([...res.data.items]);
       }
-      setLoading(false);
     } catch (error) {
       console.error(error);
       setUsers([]);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleClick = (e) => {
