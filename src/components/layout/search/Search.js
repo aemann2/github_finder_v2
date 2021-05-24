@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
+import Reset from './components/Reset';
 import classes from './css/Search.module.scss';
 import axiosGet from '../../../utils/axiosGet';
 import { UserContext } from '../../../context/UserContext';
 
 const Search = () => {
-  const { setUsers, setLoading } = useContext(UserContext);
+  const { setUsers, setLoading, isDefaultLoad, setIsDefaultLoad } =
+    useContext(UserContext);
   const [searchInput, setSearchInput] = useState('');
 
   const endpoint = `/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
@@ -12,18 +14,14 @@ const Search = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      if (searchInput === '') {
-        const res = await axiosGet('/users');
-        setUsers([...res.data]);
-      } else {
-        const res = await axiosGet(endpoint);
-        setUsers([...res.data.items]);
-      }
+      const res = await axiosGet(endpoint);
+      setUsers([...res.data.items]);
     } catch (error) {
       console.error(error);
       setUsers([]);
     }
     setLoading(false);
+    setIsDefaultLoad(false);
   };
 
   const handleClick = (e) => {
@@ -50,6 +48,13 @@ const Search = () => {
           value='Search'
         />
       </form>
+      {!isDefaultLoad && (
+        <Reset
+          setUsers={setUsers}
+          setLoading={setLoading}
+          setIsDefaultLoad={setIsDefaultLoad}
+        />
+      )}
     </div>
   );
 };

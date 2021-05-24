@@ -5,6 +5,7 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isDefaultLoad, setIsDefaultLoad] = useState(true);
 
   return (
     <UserContext.Provider
@@ -13,6 +14,8 @@ const UserContextProvider = (props) => {
         setUsers,
         loading,
         setLoading,
+        isDefaultLoad,
+        setIsDefaultLoad,
       }}
     >
       {props.children}
