@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import UserItem from '../userItem/UserItem';
-import { UserContext } from '../../../context/UserContext';
+import UserItem from './components/UserItem';
+import { UserContext } from '../../context/UserContext';
 import classes from './css/Users.module.scss';
-import axiosGet from '../../../utils/axiosGet';
+import axiosGet from '../../utils/axiosGet';
 
 const Users = () => {
   const { users, setUsers, loading, setLoading } = useContext(UserContext);

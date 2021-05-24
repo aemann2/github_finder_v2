@@ -5,8 +5,14 @@ import axiosGet from '../../../utils/axiosGet';
 import { UserContext } from '../../../context/UserContext';
 
 const Search = () => {
-  const { setUsers, setLoading, isDefaultLoad, setIsDefaultLoad } =
-    useContext(UserContext);
+  const {
+    setUsers,
+    setLoading,
+    isDefaultLoad,
+    setIsDefaultLoad,
+    alert,
+    setAlert,
+  } = useContext(UserContext);
   const [searchInput, setSearchInput] = useState('');
 
   const endpoint = `/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
@@ -24,10 +30,24 @@ const Search = () => {
     setIsDefaultLoad(false);
   };
 
+  const formValidation = (formText) => {
+    if (!formText) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const handleClick = (e) => {
     e.preventDefault();
-    fetchData();
-    setSearchInput('');
+    if (!formValidation(searchInput)) {
+      setAlert(true);
+      console.log('You must enter a search');
+    } else {
+      setAlert(false);
+      fetchData();
+      setSearchInput('');
+    }
   };
 
   return (
@@ -38,8 +58,9 @@ const Search = () => {
           type='text'
           onChange={(e) => setSearchInput(e.target.value)}
           value={searchInput}
-          placeholder='Search Users...'
+          placeholder={alert ? 'You must enter a search' : 'Search Users...'}
           aria-label='Search'
+          required
         />
         <input
           onClick={handleClick}

@@ -6,6 +6,7 @@ const UserContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isDefaultLoad, setIsDefaultLoad] = useState(true);
+  const [alert, setAlert] = useState(false);
 
   return (
     <UserContext.Provider
@@ -16,6 +17,8 @@ const UserContextProvider = (props) => {
         setLoading,
         isDefaultLoad,
         setIsDefaultLoad,
+        alert,
+        setAlert,
       }}
     >
       {props.children}
