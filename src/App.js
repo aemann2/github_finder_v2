@@ -3,18 +3,26 @@ import './App.scss';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import UserContextProvider from './context/UserContext';
-import Navbar from './components/layout/navbar/Navbar';
-import Search from './components/layout/search/Search';
-import Users from './components/users/Users';
+import Home from './components/pages/Home';
+import About from './components/pages/About';
+import UserPage from './components/pages/UserPage';
 
 function App() {
   return (
     <div className='App'>
       <UserContextProvider>
         <Router>
-          <Navbar />
-          <Search />
-          <Users />
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/about'>
+              <About />
+            </Route>
+            <Route path='/:login'>
+              <UserPage />
+            </Route>
+          </Switch>
         </Router>
       </UserContextProvider>
     </div>
