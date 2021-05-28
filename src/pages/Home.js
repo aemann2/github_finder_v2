@@ -1,5 +1,5 @@
-import Navbar from '../components/layout/navbar/Navbar';
-import Search from '../components/layout/search/Search';
+import Navbar from '../components/header/navbar/Navbar';
+import Search from '../components/header/search/Search';
 import Users from '../components/users/Users';
 
 const Home = () => {
